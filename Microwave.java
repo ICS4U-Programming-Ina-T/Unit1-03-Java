@@ -113,7 +113,7 @@ class Microwave {
                     time = time * 2;
                 } else {
                     // displays error message
-                    System.out.println("Quantity not in vaild range!");
+                    System.out.println("Quantity not in valid range!");
                     // closes program
                     System.exit(0);
                 }
