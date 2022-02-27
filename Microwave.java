@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * The Microwave program implements an application that
  * asks the user which item they would like to eat and
@@ -13,59 +15,122 @@ class Microwave {
     /**
      * Declaring constant.
      */
-    private static final int PIZZA_TIME = 45;
+    private static final int ONE_MIN = 60;
     /**
      * Declaring constant.
      */
-    private static final int SOUP_TIME = 105;
+    private static final int ONE_FOOD = 1;
     /**
      * Declaring constant.
      */
-    private static final int SUB_TIME = 60;
+    private static final int TWO_FOODS = 2;
+    /**
+     * Declaring constant.
+     */
+    private static final int THREE_FOODS = 3;
+    /**
+     * Declaring constant.
+     */
+    private static final double ONE_PIZZA = 45;
+    /**
+     * Declaring constant.
+     */
+    private static final double ONE_SOUP = 105;
+    /**
+     * Declaring constant.
+     */
+    private static final double ONE_SUB = 60;
+    /**
+     * Declaring constant.
+     */
+    private static final double ONE_POINT_FIVE = 1.5;
+    /**
+     * Declaring constant.
+     */
+    private static final String SUB_STRING = "SUB";
+    /**
+     * Declaring constant.
+     */
+    private static final String SOUP_STRING = "SOUP";
+    /**
+     * Declaring constant.
+     */
+    private static final String PIZZA_STRING = "PIZZA";
 
     /**
-     * Main entry point into program
+     * Main entry point into program.
      *
      * @param args nothing passed in
      */
     public static void main(String[] args) {
+        // declaring variable
+        double time = 0;
+
         // displays opening message
-        System.out.println("Today you will find out the amount of time it takes to heat x amount of food.");
+        System.out.println("Today you will find out the amount"
+                           + " of time it takes to heat a certain"
+                           + " amount of food(s).");
         // blank line
         System.out.println();
         // creates scanner
         final Scanner sc = new Scanner(System.in);
         // gets input from user
         System.out.println("Are you heating sub, pizza, or soup?: ");
-        final foodLower = sc.nextLine();
+        final String foodLower = sc.nextLine();
         // converts string input to uppercase format
-        final foodUpper = foodLower.toUpperCase();
-        
-        // checks which food is chosen
-        if (foodUpper == "SUB" || foodUpper == "PIZZA" || foodUpper == "SOUP") {
-            // gets input from user
-            final amountString = sc.nextLine();
-            try {
-                // converts string input to an integer
-                final amountInt = Integer.parseInt(amountString);
-                if (amountInt > 0 && amountInt < 4) {
-                    if (foodUpper == "SUB") {
-                        for (int counter = 0; counter < 4; counter++) {
-                                final double multiplier = 1;
-                                if (counter == amountInt) {
-                                    SUB_TIME = SUB_TIME * multiplier;
-                                    final double seconds  
-                } else {
-                    // display error message
-                    System.out.println("Quantity not in range.");
-                }
-            } catch (IllegalArgumentException exception) {
-                // catches invalid strings
-                System.out.println("Invalid option!");
+        final String foodUpper = foodLower.toUpperCase();
+
+        // sets time to food
+        if (SUB_STRING.equals(foodUpper)) {
+            time = ONE_SUB;
+        } else if (SOUP_STRING.equals(foodUpper)) {
+            time = ONE_SOUP;
+        } else if (PIZZA_STRING.equals(foodUpper)) {
+            time = ONE_PIZZA;
         } else {
             // displays error message
-            System.out.println("Invalid option!");
+            System.out.println("Invalid food option!");
         }
-        
+
+        if (SUB_STRING.equals(foodUpper) || PIZZA_STRING.equals(foodUpper)
+            || SOUP_STRING.equals(foodUpper)) {
+            // gets input from user
+            System.out.println("How many " + foodUpper
+                               + "(s) are you cooking (max 3)?: ");
+            final String amountString = sc.nextLine();
+            // displays a blank line
+            System.out.println();
+
+            try {
+                // converts string input to an integer
+                final int amountInt = Integer.parseInt(amountString);
+                // calculates total time in seconds
+                if (amountInt == ONE_FOOD) {
+                    time = time;
+                } else if (amountInt == TWO_FOODS) {
+                    time = time * ONE_POINT_FIVE;
+                } else if (amountInt == THREE_FOODS) {
+                    time = time * 2;
+                } else {
+                    // displays error message
+                    System.out.println("Quantity not in vaild range!");
+                    // closes program
+                    System.exit(0);
+                }
+
+                // calculates minutes
+                final int minutes = (int) time / ONE_MIN;
+                // calculates seconds
+                final double seconds = time % ONE_MIN;
+
+                // displays results to the user
+                System.out.println("The total cook time is "
+                                 + minutes + " minutes and "
+                                 + seconds + " seconds.");
+            } catch (IllegalArgumentException exception) {
+                // catches invalid strings
+                System.out.println("Invalid entry!");
+            }
+        }
     }
 }
